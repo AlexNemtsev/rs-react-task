@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
-import './error-page.css';
+import styles from './error-page.module.scss';
 
 function ErrorPage(props: { onClick: (pageName: string) => void }) {
   return (
-    <main className="error-page">
-      <h1 className="error-page__header">404</h1>
-      <p className="error-page__desc">
+    <main className={styles.errorPage}>
+      <h1 className={styles.heading}>404</h1>
+      <p className={styles.description}>
         {'Page does not exist. Go to '}
-        <Link to="/" onClick={() => props.onClick('Home')} className="error-page__link">
+        <Link to="/" onClick={() => props.onClick('Home')} className={styles.link}>
           {'Home page'}
         </Link>
       </p>
