@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import HomePage from './routes/home';
 import AboutPage from './routes/about';
-import ErrorPage from './routes/error';
-import Header from './components/header';
+import ErrorPage from './routes/error-page/error';
 import React from 'react';
+import Layout from './components/layout';
 
 interface AppState {
   page: string;
@@ -19,10 +19,11 @@ class App extends React.Component<object, AppState> {
   render(): React.ReactNode {
     return (
       <>
-        <Header page={this.state.page} onClick={this.setAppState} />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+          </Route>
           <Route path="*" element={<ErrorPage onClick={this.setAppState} />} />
         </Routes>
       </>

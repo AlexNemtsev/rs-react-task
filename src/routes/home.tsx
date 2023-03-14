@@ -1,9 +1,5 @@
 function HomePage() {
-  return (
-    <main>
-      <p>{"You're on main page"}</p>
-    </main>
-  );
+  return <p>{"You're on main page"}</p>;
 }
 
 export default HomePage;
