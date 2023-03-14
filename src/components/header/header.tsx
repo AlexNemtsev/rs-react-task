@@ -1,4 +1,5 @@
 import NavItem from '../nav-item/nav-item';
+import styles from './header.module.scss';
 
 function Header() {
   const routes: Array<[string, string]> = [
@@ -11,9 +12,9 @@ function Header() {
   ));
 
   return (
-    <header>
+    <header className={styles.header}>
       <nav>
-        <ul>{navItems}</ul>
+        <ul className={styles.ul}>{navItems}</ul>
       </nav>
     </header>
   );
