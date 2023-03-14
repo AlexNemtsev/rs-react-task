@@ -5,6 +5,7 @@ function Header() {
   const routes: Array<[string, string]> = [
     ['/', 'Home'],
     ['/about', 'About'],
+    ['/form', 'Form'],
   ];
 
   const navItems = routes.map((route) => (

@@ -4,6 +4,7 @@ import AboutPage from './routes/about';
 import ErrorPage from './routes/error-page/error';
 import React from 'react';
 import Layout from './components/layout';
+import FormPage from './routes/form-page/form';
 
 interface AppState {
   page: string;
@@ -23,6 +24,7 @@ class App extends React.Component<object, AppState> {
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/form" element={<FormPage />} />
           </Route>
           <Route path="*" element={<ErrorPage onClick={this.setAppState} />} />
         </Routes>
