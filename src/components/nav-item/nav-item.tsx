@@ -11,12 +11,14 @@ interface classNameArg {
   isPending: boolean;
 }
 
+const active = `${styles.link} ${styles.active}`;
+
 const setActive: (arg: classNameArg) => string = ({ isActive }: classNameArg) =>
-  isActive ? styles.active : styles.link;
+  isActive ? active : styles.link;
 
 function NavItem(props: NavItemProps) {
   return (
-    <li>
+    <li className={styles.li}>
       <NavLink to={props.route} className={setActive}>
         {props.pageName}
       </NavLink>

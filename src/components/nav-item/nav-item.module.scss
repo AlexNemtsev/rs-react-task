@@ -1,9 +1,18 @@
-.active {
-  color: crimson;
-}
-
 .link {
   color: black;
+  transition: color 100ms 100ms;
+
+  &:hover {
+    color: darkorange;
+  }
+}
+
+.active {
+  color: crimson;
+
+  &:hover {
+    cursor: default;
+  }
 }
 
 .li {
