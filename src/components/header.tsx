@@ -1,23 +1,17 @@
-import NavItem from './nav-item';
+import NavItem from './nav-item/nav-item';
 
-interface HeaderProps {
-  page: string;
-  onClick: (pageName: string) => void;
-}
-
-function Header(props: HeaderProps) {
+function Header() {
   const routes: Array<[string, string]> = [
     ['/', 'Home'],
     ['/about', 'About'],
   ];
 
   const navItems = routes.map((route) => (
-    <NavItem key={route[0]} route={route[0]} pageName={route[1]} onClick={props.onClick} />
+    <NavItem key={route[0]} route={route[0]} pageName={route[1]} />
   ));
 
   return (
     <header>
-      <h1>{props.page}</h1>
       <nav>
         <ul>{navItems}</ul>
       </nav>
