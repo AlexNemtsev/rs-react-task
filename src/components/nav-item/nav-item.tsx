@@ -11,10 +11,8 @@ interface classNameArg {
   isPending: boolean;
 }
 
-const active = `${styles.link} ${styles.active}`;
-
 const setActive: (arg: classNameArg) => string = ({ isActive }: classNameArg) =>
-  isActive ? active : styles.link;
+  isActive ? styles.active : styles.link;
 
 function NavItem(props: NavItemProps) {
   return (
