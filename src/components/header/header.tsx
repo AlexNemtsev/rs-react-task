@@ -1,4 +1,4 @@
-import NavItem from './nav-item/nav-item';
+import NavItem from '../nav-item/nav-item';
 
 function Header() {
   const routes: Array<[string, string]> = [
