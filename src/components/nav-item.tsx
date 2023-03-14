@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 interface NavItemProps {
   route: string;
@@ -9,9 +9,9 @@ interface NavItemProps {
 function NavItem(props: NavItemProps) {
   return (
     <li>
-      <Link to={props.route} onClick={() => props.onClick(props.pageName)}>
+      <NavLink to={props.route} onClick={() => props.onClick(props.pageName)}>
         {props.pageName}
-      </Link>
+      </NavLink>
     </li>
   );
 }
