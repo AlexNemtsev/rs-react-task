@@ -13,7 +13,6 @@ function ProductCard({ item }: ProductCardProps) {
       </div>
       <div className={styles.description}>
         <p className={styles.name}>{item.title}</p>
-        {/* <p className={styles.rating}>{'⭐' + item.rating}</p> */}
         <p className={styles.price}>{'$' + item.price}</p>
         <p className={styles.stock}>{'Stock: ' + item.stock}</p>
       </div>
