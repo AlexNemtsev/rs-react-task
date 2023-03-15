@@ -18,12 +18,12 @@ const products: Product[] = [
     thumbnail: 'https://i.dummyjson.com/data/products/2/thumbnail.jpg',
   },
   {
-    id: 3,
-    title: 'Samsung Universe 9',
-    price: 1249,
-    rating: 4.09,
-    stock: 36,
-    thumbnail: 'https://i.dummyjson.com/data/products/3/thumbnail.jpg',
+    id: 7,
+    title: 'Samsung Galaxy Book',
+    price: 1499,
+    rating: 4.25,
+    stock: 50,
+    thumbnail: 'https://i.dummyjson.com/data/products/7/thumbnail.jpg',
   },
   {
     id: 4,
