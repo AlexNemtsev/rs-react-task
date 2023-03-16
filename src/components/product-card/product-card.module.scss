@@ -1,3 +1,5 @@
+@import '../../main.scss';
+
 @function soft-border($color) {
   @return 0 2.8px 2.2px rgba($color, 0.034), 0 6.7px 5.3px rgba($color, 0.048),
     0 12.5px 10px rgba($color, 0.06), 0 22.3px 17.9px rgba($color, 0.072),
@@ -12,7 +14,7 @@
   transition: box-shadow 100ms 100ms;
 
   &:hover {
-    box-shadow: soft-border(#ff8c00);
+    box-shadow: soft-border($activ-color);
     cursor: pointer;
   }
 }

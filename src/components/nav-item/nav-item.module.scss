@@ -1,9 +1,11 @@
+@import '../../main.scss';
+
 .link {
   color: black;
   transition: color 100ms 100ms;
 
   &:hover {
-    color: darkorange;
+    color: $activ-color;
   }
 }
 
