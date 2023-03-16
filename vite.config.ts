@@ -13,6 +13,8 @@ export default defineConfig({
       enabled: true,
       provider: 'c8',
       all: true,
+      clean: true,
     },
+    watch: false,
   },
 });

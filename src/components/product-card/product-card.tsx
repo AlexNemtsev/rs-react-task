@@ -7,7 +7,7 @@ interface ProductCardProps {
 
 function ProductCard({ item }: ProductCardProps) {
   return (
-    <div className={styles.card}>
+    <div className={styles.card} data-testid="card">
       <div>
         <img src={item.thumbnail} alt={item.title} className={styles.img} />
       </div>
