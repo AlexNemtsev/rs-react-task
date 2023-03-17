@@ -8,13 +8,15 @@ interface SearchBarState {
 class SearchBar extends React.Component<object, SearchBarState> {
   constructor(props: object) {
     super(props);
+    const value: string = localStorage.getItem(this.storageKey) || '';
+    this.state = { inputValue: value };
     this.inputHandler = this.inputHandler.bind(this);
   }
 
   private storageKey = 'inputValue';
 
   componentDidMount(): void {
-    const value: string = localStorage.getItem(this.storageKey) ?? '';
+    const value: string = localStorage.getItem(this.storageKey) || '';
     this.setState({ inputValue: value });
   }
 
