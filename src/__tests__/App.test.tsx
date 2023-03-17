@@ -9,16 +9,10 @@ import LocationMock from './location-mock';
 const renderWithRouter = (component: JSX.Element) =>
   render(<MemoryRouter>{component}</MemoryRouter>);
 
-beforeEach(async () => {
-  globalThis.localStorage = new LocalStorageMock();
+beforeEach(() => {
   vi.stubGlobal('location', new LocationMock());
+  vi.stubGlobal('localStorage', new LocalStorageMock());
 });
-
-// it('should call assign with a relative url', () => {
-//   window.location.assign('/relative-url');
-//   expect(window.location.pathname).not.toBe('/');
-//   expect(window.location).toBe('/relative-url');
-// });
 
 test('Home page should be displayed', () => {
   const screen = renderWithRouter(<App />);
@@ -36,18 +30,18 @@ test('After clicking "About" link page "About" should be displayed', async () =>
 
 test('Search bar should save its value in Local Storage', async () => {
   const screen = renderWithRouter(<App />);
-  let searchBar = screen.getByPlaceholderText(/search\.\.\./i);
+  let searchBar = screen.getByPlaceholderText(/search\.\.\./i) as HTMLInputElement;
 
   const testString = '123abc';
 
-  userEvent.type(searchBar, testString);
+  await userEvent.type(searchBar, testString);
 
   const aboutLink = screen.getByText(/about/i);
   await userEvent.click(aboutLink);
   const homeLink = await screen.findByText(/home/i);
   await userEvent.click(homeLink);
 
-  searchBar = await screen.findByPlaceholderText(/search\.\.\./i);
+  searchBar = (await screen.findByPlaceholderText(/search\.\.\./i)) as HTMLInputElement;
 
-  expect(searchBar.textContent).toBe(testString);
+  expect(searchBar.value).toBe(testString);
 });
