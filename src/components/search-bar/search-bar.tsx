@@ -11,6 +11,17 @@ class SearchBar extends React.Component<object, SearchBarState> {
     this.inputHandler = this.inputHandler.bind(this);
   }
 
+  private storageKey = 'inputValue';
+
+  componentDidMount(): void {
+    const value: string = localStorage.getItem(this.storageKey) ?? '';
+    this.setState({ inputValue: value });
+  }
+
+  componentWillUnmount(): void {
+    localStorage.setItem(this.storageKey, this.state.inputValue);
+  }
+
   render(): React.ReactNode {
     return (
       <section className={styles.section}>
@@ -21,6 +32,7 @@ class SearchBar extends React.Component<object, SearchBarState> {
           className={styles.input}
           placeholder="Search..."
           onInput={this.inputHandler}
+          value={this.state.inputValue}
         />
       </section>
     );
@@ -29,7 +41,6 @@ class SearchBar extends React.Component<object, SearchBarState> {
   inputHandler(event: FormEvent<HTMLInputElement>) {
     const target = event.target as HTMLInputElement;
     this.setState({ inputValue: target.value });
-    console.log(this.state);
   }
 }
 
