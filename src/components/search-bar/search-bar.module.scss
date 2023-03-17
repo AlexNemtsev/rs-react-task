@@ -19,9 +19,3 @@
     outline-color: $activ-color;
   }
 }
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  gap: 50px;
-}
