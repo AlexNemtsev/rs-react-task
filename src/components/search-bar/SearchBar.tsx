@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React from 'react';
 import styles from './search-bar.module.scss';
 
 interface SearchBarState {
@@ -40,10 +40,10 @@ class SearchBar extends React.Component<object, SearchBarState> {
     );
   }
 
-  inputHandler(event: FormEvent<HTMLInputElement>) {
+  inputHandler: React.FormEventHandler<HTMLInputElement> = (event) => {
     const target = event.target as HTMLInputElement;
     this.setState({ inputValue: target.value });
-  }
+  };
 }
 
 export default SearchBar;

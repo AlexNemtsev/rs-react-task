@@ -5,7 +5,7 @@ interface ProductCardProps {
   item: Omit<Product, 'id'>;
 }
 
-function ProductCard({ item }: ProductCardProps) {
+const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
   return (
     <div className={styles.card} data-testid="card">
       <div>
@@ -18,6 +18,6 @@ function ProductCard({ item }: ProductCardProps) {
       </div>
     </div>
   );
-}
+};
 
 export default ProductCard;
