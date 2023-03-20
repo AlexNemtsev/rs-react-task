@@ -1,6 +1,6 @@
 import products from '../../assets/products';
-import ProductCard from '../../components/product-card/product-card';
-import SearchBar from '../../components/search-bar/search-bar';
+import ProductCard from '../../components/product-card/ProductCard';
+import SearchBar from '../../components/search-bar/SearchBar';
 import styles from './home-page.module.scss';
 
 function HomePage() {

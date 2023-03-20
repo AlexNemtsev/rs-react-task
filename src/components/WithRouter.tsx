@@ -4,7 +4,7 @@ interface WithRouterProps {
   location: ReturnType<typeof useLocation>;
 }
 
-function withRouter<Props extends WithRouterProps>(Component: React.ComponentType<Props>) {
+function WithRouter<Props extends WithRouterProps>(Component: React.ComponentType<Props>) {
   function ComponentWithRouterProp(props: Omit<Props, keyof WithRouterProps>) {
     const location = useLocation();
     return <Component {...(props as Props)} location={location} />;
@@ -13,4 +13,4 @@ function withRouter<Props extends WithRouterProps>(Component: React.ComponentTyp
   return ComponentWithRouterProp;
 }
 
-export default withRouter;
+export default WithRouter;

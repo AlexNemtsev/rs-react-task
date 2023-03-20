@@ -1,4 +1,4 @@
-import NavItem from '../nav-item/nav-item';
+import NavItem from '../nav-item/NavItem';
 import styles from './header.module.scss';
 
 function Header() {
