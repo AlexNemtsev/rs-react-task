@@ -1,0 +1,21 @@
+@import '../../main.scss';
+
+.section {
+  @include section-style;
+}
+
+.input {
+  background: url('../../assets/icons8-search.svg') no-repeat 10px center;
+  box-sizing: border-box;
+  width: 500px;
+  height: 40px;
+  border-radius: 40px;
+  padding-left: 50px;
+  font-size: 1.5em;
+  border: 2px solid #008000;
+  color: #004000;
+
+  &:focus {
+    outline-color: $activ-color;
+  }
+}

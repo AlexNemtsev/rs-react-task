@@ -1,0 +1,22 @@
+@import '../../main.scss';
+
+.link {
+  color: black;
+  transition: color 100ms 100ms;
+
+  &:hover {
+    color: $activ-color;
+  }
+}
+
+.active {
+  color: crimson;
+
+  &:hover {
+    cursor: default;
+  }
+}
+
+.li {
+  padding: 0 30px;
+}

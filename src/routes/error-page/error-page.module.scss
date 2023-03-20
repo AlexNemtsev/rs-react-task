@@ -1,0 +1,20 @@
+.errorPage {
+  text-align: center;
+}
+
+.heading {
+  font-size: 4em;
+}
+
+.description {
+  font-size: 2em;
+}
+
+.link {
+  color: blue;
+  transition: color 100ms 100ms;
+
+  &:hover {
+    color: darkorange;
+  }
+}
