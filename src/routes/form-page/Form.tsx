@@ -13,6 +13,15 @@ const FormPage = () => {
         <label>
           Birth date <input type="date" name="date" />
         </label>
+        <fieldset>
+          Sex:
+          <label>
+            Male <input type="radio" name="sex" value="male" />
+          </label>
+          <label>
+            Female <input type="radio" name="sex" value="female" />
+          </label>
+        </fieldset>
       </form>
     </section>
   );
