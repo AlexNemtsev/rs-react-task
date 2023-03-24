@@ -1,4 +1,10 @@
-.description {
-  font-size: 2em;
-  text-align: center;
+@import '../../main.scss';
+
+.section {
+  @include section-style;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
 }
