@@ -14,7 +14,7 @@ interface classNameArg {
 const setActive: (arg: classNameArg) => string = ({ isActive }: classNameArg) =>
   isActive ? styles.active : styles.link;
 
-const NavItem: React.FC<NavItemProps> = (props) => {
+const NavItem = (props: NavItemProps) => {
   return (
     <li className={styles.li}>
       <NavLink to={props.route} className={setActive}>

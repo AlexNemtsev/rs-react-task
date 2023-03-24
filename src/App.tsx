@@ -5,7 +5,7 @@ import ErrorPage from './routes/error-page/Error';
 import Layout from './components/Layout';
 import FormPage from './routes/form-page/Form';
 
-function App() {
+const App = () => {
   return (
     <>
       <Routes>
@@ -18,6 +18,6 @@ function App() {
       </Routes>
     </>
   );
-}
+};
 
 export default App;

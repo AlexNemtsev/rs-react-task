@@ -5,7 +5,7 @@ interface ProductCardProps {
   item: Omit<Product, 'id'>;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
+const ProductCard = ({ item }: ProductCardProps) => {
   return (
     <div className={styles.card} data-testid="card">
       <div>

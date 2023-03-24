@@ -2,7 +2,7 @@ import Header from './header/Header';
 import WithRouter from './WithRouter';
 import { Outlet } from 'react-router-dom';
 
-function Layout() {
+const Layout = () => {
   const HeaderRouter = WithRouter(Header);
   return (
     <>
@@ -12,6 +12,6 @@ function Layout() {
       </main>
     </>
   );
-}
+};
 
 export default Layout;
