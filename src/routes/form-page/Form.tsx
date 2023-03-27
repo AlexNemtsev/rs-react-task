@@ -1,33 +1,44 @@
 import React, { createRef } from 'react';
 import styles from './form.module.scss';
 
-interface FormData<
-  T extends React.RefObject<HTMLInputElement> | string,
-  P extends React.RefObject<HTMLSelectElement | void>
-> {
-  firstName: T;
-  lastName: T;
-  date: T;
-  sex: T;
-  position: P;
-  rss: T;
-  photo: T;
+interface FormRefs {
+  firstName: React.RefObject<HTMLInputElement>;
+  lastName: React.RefObject<HTMLInputElement>;
+  date: React.RefObject<HTMLInputElement>;
+  sexMale: React.RefObject<HTMLInputElement>;
+  sexFemale: React.RefObject<HTMLInputElement>;
+  position: React.RefObject<HTMLSelectElement>;
+  rss: React.RefObject<HTMLInputElement>;
+  photo: React.RefObject<HTMLInputElement>;
 }
 
-class FormPage extends React.Component<object> {
+type KeysOfForm = {
+  [key in keyof Omit<FormRefs, 'sexMale' | 'sexFemale'>]: string;
+};
+
+interface FormData extends KeysOfForm {
+  sex: string;
+}
+
+interface FormPageState {
+  data: Array<FormData>;
+}
+
+class FormPage extends React.Component<object, FormPageState> {
   constructor(props: object) {
     super(props);
     this.onSubmitHandler.bind(this);
+    this.state = {
+      data: [],
+    };
   }
 
-  private formRefs: FormData<
-    React.RefObject<HTMLInputElement>,
-    React.RefObject<HTMLSelectElement>
-  > = {
+  private formRefs: FormRefs = {
     firstName: createRef<HTMLInputElement>(),
     lastName: createRef<HTMLInputElement>(),
     date: createRef<HTMLInputElement>(),
-    sex: createRef<HTMLInputElement>(),
+    sexMale: createRef<HTMLInputElement>(),
+    sexFemale: createRef<HTMLInputElement>(),
     position: createRef<HTMLSelectElement>(),
     rss: createRef<HTMLInputElement>(),
     photo: createRef<HTMLInputElement>(),
@@ -42,6 +53,18 @@ class FormPage extends React.Component<object> {
     ].every((validate) => validate);
 
     if (isFormValid) {
+      const newData: FormData = {
+        firstName: this.formRefs.firstName.current?.value || '',
+        lastName: this.formRefs.lastName.current?.value || '',
+        date: this.formRefs.date.current?.value || '',
+        sex: this.formRefs.sexMale.current?.checked ? 'Male' : 'Female',
+        position: this.formRefs.position.current?.value || '',
+        rss: this.formRefs.rss.current?.checked ? 'Yes' : 'No',
+        photo: this.formRefs.photo.current?.value || '',
+      };
+
+      this.setState({ data: [...this.state.data, newData] });
+      console.log(this.state.data);
     }
   };
 
@@ -86,10 +109,10 @@ class FormPage extends React.Component<object> {
           <fieldset>
             Sex:{' '}
             <label>
-              Male <input type="radio" name="sex" value="male" ref={this.formRefs.sex} />
+              Male <input type="radio" name="sex" value="male" ref={this.formRefs.sexMale} />
             </label>
             <label>
-              Female <input type="radio" name="sex" value="female" ref={this.formRefs.sex} />
+              Female <input type="radio" name="sex" value="female" ref={this.formRefs.sexFemale} />
             </label>
           </fieldset>
           <label>
