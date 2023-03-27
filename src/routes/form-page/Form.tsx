@@ -2,9 +2,19 @@ import React, { createRef } from 'react';
 import styles from './form.module.scss';
 import { FormRefs, FormData } from '../../interfaces/form-interfaces';
 import CvCard from '../../components/CvCard';
+import Error from '../../components/error-message/Error';
 
 interface FormPageState {
   data: Array<FormData>;
+  errors: FormErrors;
+}
+
+interface FormErrors {
+  [key: string]: boolean;
+  firstName: boolean;
+  lastName: boolean;
+  date: boolean;
+  image: boolean;
 }
 
 const positionOptions: { [key: string]: string } = {
@@ -19,6 +29,12 @@ class FormPage extends React.Component<object, FormPageState> {
     this.onSubmitHandler.bind(this);
     this.state = {
       data: [],
+      errors: {
+        firstName: false,
+        lastName: false,
+        date: false,
+        image: false,
+      },
     };
   }
 
@@ -37,11 +53,18 @@ class FormPage extends React.Component<object, FormPageState> {
 
   private onSubmitHandler: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const isFormValid = [
-      this.validateTextField(this.formRefs.firstName),
-      this.validateTextField(this.formRefs.lastName),
-      this.validateDate(this.formRefs.date),
-    ].every((validate) => validate);
+    const errors: FormErrors = {
+      firstName: !this.validateTextField(this.formRefs.firstName),
+      lastName: !this.validateTextField(this.formRefs.lastName),
+      date: !this.validateDate(this.formRefs.date),
+      image: !this.validateFile(this.formRefs.photo),
+    };
+
+    this.setState({
+      errors,
+    });
+
+    const isFormValid = Object.values(errors).every((error) => !error);
 
     if (isFormValid) {
       const newData: FormData = {
@@ -84,6 +107,14 @@ class FormPage extends React.Component<object, FormPageState> {
     return true;
   }
 
+  private validateFile(ref: React.RefObject<HTMLInputElement>): boolean {
+    if (ref.current?.files) {
+      return ref.current?.files[0].type === 'image/jpeg';
+    }
+
+    return false;
+  }
+
   render(): React.ReactNode {
     const cards = this.state.data.map((card, idx) => <CvCard key={idx.toString()} {...card} />);
     return (
@@ -94,25 +125,34 @@ class FormPage extends React.Component<object, FormPageState> {
               First name:{' '}
               <input type="text" name="first-name" required ref={this.formRefs.firstName} />
             </label>
+            <Error
+              shouldDisplay={this.state.errors.firstName}
+              text="First name must start with a capital letter"
+            />
             <label>
               Last name:{' '}
               <input type="text" name="last-name" required ref={this.formRefs.lastName} />
             </label>
+            <Error
+              shouldDisplay={this.state.errors.lastName}
+              text="Last name must start with a capital letter"
+            />
             <label>
               Birth date: <input type="date" name="date" ref={this.formRefs.date} required />
             </label>
-            <fieldset>
+            <Error shouldDisplay={this.state.errors.date} text="You must be elder than 18" />
+            <fieldset className={[styles.radioButtons, styles.formElementPadding].join(' ')}>
               Sex:{' '}
               <label>
-                Male{' '}
+                Male
                 <input type="radio" name="sex" value="male" ref={this.formRefs.sexMale} required />
               </label>
               <label>
-                Female{' '}
+                {'   '}Female
                 <input type="radio" name="sex" value="female" ref={this.formRefs.sexFemale} />
               </label>
             </fieldset>
-            <label>
+            <label className={styles.formElementPadding}>
               Desired position:{' '}
               <select name="position" defaultValue={''} ref={this.formRefs.position} required>
                 <option value="" disabled>
@@ -127,18 +167,25 @@ class FormPage extends React.Component<object, FormPageState> {
                 })}
               </select>
             </label>
-            <label>
+            <label className={styles.formElementPadding}>
               Graduated from RS School:{' '}
               <input type="checkbox" name="rs-school" ref={this.formRefs.rss} />
             </label>
             Photo
-            <label>
-              <input type="file" name="photo" ref={this.formRefs.photo} required />
+            <label className={styles.formElementPadding}>
+              <input
+                type="file"
+                name="photo"
+                ref={this.formRefs.photo}
+                accept="image/jpeg"
+                required
+              />
             </label>
+            <Error shouldDisplay={this.state.errors.image} text="Image must have jpeg format" />
             <input type="submit" value="Submit" />
           </form>
         </section>
-        <section>{cards}</section>
+        <section className={styles.cards}>{cards}</section>
       </>
     );
   }
