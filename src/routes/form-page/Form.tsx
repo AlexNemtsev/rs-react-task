@@ -1,28 +1,17 @@
 import React, { createRef } from 'react';
 import styles from './form.module.scss';
-
-interface FormRefs {
-  firstName: React.RefObject<HTMLInputElement>;
-  lastName: React.RefObject<HTMLInputElement>;
-  date: React.RefObject<HTMLInputElement>;
-  sexMale: React.RefObject<HTMLInputElement>;
-  sexFemale: React.RefObject<HTMLInputElement>;
-  position: React.RefObject<HTMLSelectElement>;
-  rss: React.RefObject<HTMLInputElement>;
-  photo: React.RefObject<HTMLInputElement>;
-}
-
-type KeysOfForm = {
-  [key in keyof Omit<FormRefs, 'sexMale' | 'sexFemale'>]: string;
-};
-
-interface FormData extends KeysOfForm {
-  sex: string;
-}
+import { FormRefs, FormData } from '../../interfaces/form-interfaces';
+import CvCard from '../../components/CvCard';
 
 interface FormPageState {
   data: Array<FormData>;
 }
+
+const positionOptions: { [key: string]: string } = {
+  fe: 'Front-end',
+  be: 'Back-end',
+  fs: 'Full-stack',
+};
 
 class FormPage extends React.Component<object, FormPageState> {
   constructor(props: object) {
@@ -44,6 +33,8 @@ class FormPage extends React.Component<object, FormPageState> {
     photo: createRef<HTMLInputElement>(),
   };
 
+  private formRef = createRef<HTMLFormElement>();
+
   private onSubmitHandler: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const isFormValid = [
@@ -58,13 +49,14 @@ class FormPage extends React.Component<object, FormPageState> {
         lastName: this.formRefs.lastName.current?.value || '',
         date: this.formRefs.date.current?.value || '',
         sex: this.formRefs.sexMale.current?.checked ? 'Male' : 'Female',
-        position: this.formRefs.position.current?.value || '',
+        position: positionOptions[this.formRefs.position.current?.value || ''],
         rss: this.formRefs.rss.current?.checked ? 'Yes' : 'No',
-        photo: this.formRefs.photo.current?.value || '',
+        photo: this.formRefs.photo.current?.files![0].name || '',
       };
 
+      this.formRef.current?.reset();
+
       this.setState({ data: [...this.state.data, newData] });
-      console.log(this.state.data);
     }
   };
 
@@ -93,50 +85,61 @@ class FormPage extends React.Component<object, FormPageState> {
   }
 
   render(): React.ReactNode {
+    const cards = this.state.data.map((card, idx) => <CvCard key={idx.toString()} {...card} />);
     return (
-      <section className={styles.section}>
-        <form className={styles.form} onSubmit={this.onSubmitHandler}>
-          <label>
-            First name:{' '}
-            <input type="text" name="first-name" required ref={this.formRefs.firstName} />
-          </label>
-          <label>
-            Last name: <input type="text" name="last-name" required ref={this.formRefs.lastName} />
-          </label>
-          <label>
-            Birth date: <input type="date" name="date" ref={this.formRefs.date} />
-          </label>
-          <fieldset>
-            Sex:{' '}
+      <>
+        <section className={styles.section}>
+          <form className={styles.form} onSubmit={this.onSubmitHandler} ref={this.formRef}>
             <label>
-              Male <input type="radio" name="sex" value="male" ref={this.formRefs.sexMale} />
+              First name:{' '}
+              <input type="text" name="first-name" required ref={this.formRefs.firstName} />
             </label>
             <label>
-              Female <input type="radio" name="sex" value="female" ref={this.formRefs.sexFemale} />
+              Last name:{' '}
+              <input type="text" name="last-name" required ref={this.formRefs.lastName} />
             </label>
-          </fieldset>
-          <label>
-            Desired position:{' '}
-            <select name="position" defaultValue={''} ref={this.formRefs.position}>
-              <option value="" disabled>
-                – Choose position –
-              </option>
-              <option value="fe">Front-end</option>
-              <option value="be">Back-end</option>
-              <option value="fs">Full Stack</option>
-            </select>
-          </label>
-          <label>
-            Graduated from RS School:{' '}
-            <input type="checkbox" name="rs-school" ref={this.formRefs.rss} />
-          </label>
-          Photo
-          <label>
-            <input type="file" name="photo" ref={this.formRefs.photo} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-      </section>
+            <label>
+              Birth date: <input type="date" name="date" ref={this.formRefs.date} required />
+            </label>
+            <fieldset>
+              Sex:{' '}
+              <label>
+                Male{' '}
+                <input type="radio" name="sex" value="male" ref={this.formRefs.sexMale} required />
+              </label>
+              <label>
+                Female{' '}
+                <input type="radio" name="sex" value="female" ref={this.formRefs.sexFemale} />
+              </label>
+            </fieldset>
+            <label>
+              Desired position:{' '}
+              <select name="position" defaultValue={''} ref={this.formRefs.position} required>
+                <option value="" disabled>
+                  – Choose position –
+                </option>
+                {Object.keys(positionOptions).map((key) => {
+                  return (
+                    <option value={key} key={key}>
+                      {positionOptions[key]}
+                    </option>
+                  );
+                })}
+              </select>
+            </label>
+            <label>
+              Graduated from RS School:{' '}
+              <input type="checkbox" name="rs-school" ref={this.formRefs.rss} />
+            </label>
+            Photo
+            <label>
+              <input type="file" name="photo" ref={this.formRefs.photo} required />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+        </section>
+        <section>{cards}</section>
+      </>
     );
   }
 }
