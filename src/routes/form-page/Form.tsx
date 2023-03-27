@@ -1,13 +1,29 @@
 import React, { createRef } from 'react';
 import styles from './form.module.scss';
 
+interface FormData<
+  T extends React.RefObject<HTMLInputElement> | string,
+  P extends React.RefObject<HTMLSelectElement | void>
+> {
+  firstName: T;
+  lastName: T;
+  date: T;
+  sex: T;
+  position: P;
+  rss: T;
+  photo: T;
+}
+
 class FormPage extends React.Component<object> {
   constructor(props: object) {
     super(props);
     this.onSubmitHandler.bind(this);
   }
 
-  private formRefs = {
+  private formRefs: FormData<
+    React.RefObject<HTMLInputElement>,
+    React.RefObject<HTMLSelectElement>
+  > = {
     firstName: createRef<HTMLInputElement>(),
     lastName: createRef<HTMLInputElement>(),
     date: createRef<HTMLInputElement>(),
@@ -19,21 +35,27 @@ class FormPage extends React.Component<object> {
 
   private onSubmitHandler: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    this.validateTextField(this.formRefs.firstName);
-    this.validateTextField(this.formRefs.lastName);
-    this.validateDate(this.formRefs.date);
+    const isFormValid = [
+      this.validateTextField(this.formRefs.firstName),
+      this.validateTextField(this.formRefs.lastName),
+      this.validateDate(this.formRefs.date),
+    ].every((validate) => validate);
+
+    if (isFormValid) {
+    }
   };
 
-  private validateTextField(ref: React.RefObject<HTMLInputElement>) {
+  private validateTextField(ref: React.RefObject<HTMLInputElement>): boolean {
     const regex = /\b[A-Z].*?\b/;
 
-    if (regex.test(ref.current?.value || '')) console.log('valid');
+    if (regex.test(ref.current?.value || '')) return true;
     else if (ref.current) {
       ref.current.value = '';
     }
+    return false;
   }
 
-  private validateDate(ref: React.RefObject<HTMLInputElement>) {
+  private validateDate(ref: React.RefObject<HTMLInputElement>): boolean {
     const date = new Date(ref.current?.value || Date.now());
     const diff = Date.now() - date.getTime();
     const age = new Date(diff).getFullYear() - 1970;
@@ -42,7 +64,9 @@ class FormPage extends React.Component<object> {
       if (ref.current) {
         ref.current.value = '';
       }
+      return false;
     }
+    return true;
   }
 
   render(): React.ReactNode {
