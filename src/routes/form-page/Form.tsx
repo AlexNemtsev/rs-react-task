@@ -70,6 +70,13 @@ class FormPage extends React.Component<object, FormPageState> {
     const isFormValid = Object.values(errors).every((error) => !error);
 
     if (isFormValid) {
+      let fileName = 'No file';
+      const files = this.formRefs.photo.current?.files;
+
+      if (files && files.length) {
+        fileName = files[0].name;
+      }
+
       const newData: FormData = {
         firstName: this.formRefs.firstName.current?.value || '',
         lastName: this.formRefs.lastName.current?.value || '',
@@ -77,7 +84,7 @@ class FormPage extends React.Component<object, FormPageState> {
         sex: this.formRefs.sexMale.current?.checked ? 'Male' : 'Female',
         position: positionOptions[this.formRefs.position.current?.value || ''],
         rss: this.formRefs.rss.current?.checked ? 'Yes' : 'No',
-        photo: this.formRefs.photo.current?.files![0].name || '',
+        photo: fileName,
       };
 
       this.formRef.current?.reset();
@@ -115,11 +122,11 @@ class FormPage extends React.Component<object, FormPageState> {
   }
 
   private validateFile(ref: React.RefObject<HTMLInputElement>): boolean {
-    if (ref.current?.files) {
+    if (ref.current?.files && ref.current?.files[0]) {
       return ref.current?.files[0].type === 'image/jpeg';
     }
 
-    return false;
+    return true;
   }
 
   render(): React.ReactNode {
@@ -180,13 +187,7 @@ class FormPage extends React.Component<object, FormPageState> {
             </label>
             Photo
             <label className={styles.formElementPadding}>
-              <input
-                type="file"
-                name="photo"
-                ref={this.formRefs.photo}
-                accept="image/jpeg"
-                required
-              />
+              <input type="file" name="photo" ref={this.formRefs.photo} accept="image/jpeg" />
             </label>
             <Error shouldDisplay={this.state.errors.image} text="Image must have jpeg format" />
             <input type="submit" value="Submit" />
