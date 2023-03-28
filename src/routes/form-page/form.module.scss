@@ -1,4 +1,26 @@
-.description {
-  font-size: 2em;
-  text-align: center;
+@import '../../main.scss';
+
+.section {
+  @include section-style;
+}
+
+.formElementPadding {
+  padding: 0 0 16px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.radioButtons {
+  border: none;
+  margin: 0;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 800px;
+  margin: 0 auto;
 }

@@ -14,7 +14,7 @@ interface classNameArg {
 const setActive: (arg: classNameArg) => string = ({ isActive }: classNameArg) =>
   isActive ? styles.active : styles.link;
 
-function NavItem(props: NavItemProps) {
+const NavItem = (props: NavItemProps) => {
   return (
     <li className={styles.li}>
       <NavLink to={props.route} className={setActive}>
@@ -22,6 +22,6 @@ function NavItem(props: NavItemProps) {
       </NavLink>
     </li>
   );
-}
+};
 
 export default NavItem;
