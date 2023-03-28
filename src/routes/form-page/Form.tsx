@@ -3,11 +3,12 @@ import styles from './form.module.scss';
 import { FormRefs, FormData } from '../../interfaces/form-interfaces';
 import CvCard from '../../components/CvCard';
 import Error from '../../components/error-message/Error';
+import ConfirmMsg from '../../components/ConfirmMsg';
 
-// TODO: add a confirmation message
 interface FormPageState {
   data: Array<FormData>;
   errors: FormErrors;
+  msgHide: boolean;
 }
 
 interface FormErrors {
@@ -36,6 +37,7 @@ class FormPage extends React.Component<object, FormPageState> {
         date: false,
         image: false,
       },
+      msgHide: true,
     };
   }
 
@@ -51,7 +53,6 @@ class FormPage extends React.Component<object, FormPageState> {
   };
 
   private formRef = createRef<HTMLFormElement>();
-  private dialogRef = createRef<HTMLDialogElement>();
 
   private onSubmitHandler: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -80,13 +81,12 @@ class FormPage extends React.Component<object, FormPageState> {
       };
 
       this.formRef.current?.reset();
-      this.dialogRef.current?.show();
 
-      // setTimeout(() => {
-      //   this.dialogRef.current?.close();
-      // }, 3000);
+      this.setState({ data: [...this.state.data, newData], msgHide: false });
 
-      this.setState({ data: [...this.state.data, newData] });
+      setTimeout(() => {
+        this.setState({ msgHide: true });
+      }, 3000);
     }
   };
 
@@ -192,9 +192,7 @@ class FormPage extends React.Component<object, FormPageState> {
             <input type="submit" value="Submit" />
           </form>
         </section>
-        <dialog open className={styles.dialog} ref={this.dialogRef}>
-          Card created
-        </dialog>
+        <ConfirmMsg isHide={this.state.msgHide} />
         <section className={styles.cards}>{cards}</section>
       </>
     );

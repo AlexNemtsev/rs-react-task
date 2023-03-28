@@ -24,15 +24,3 @@
   width: 800px;
   margin: 0 auto;
 }
-
-.dialog {
-  position: fixed;
-  top: 50%;
-  left: 60%;
-  transition: transform 500ms;
-
-  &:not([open]) {
-    transform: translateX(-150%);
-    transition: transform 500ms;
-  }
-}
