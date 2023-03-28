@@ -1,0 +1,15 @@
+.dialog {
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 60%;
+  transition: transform 1s, opacity 1s;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.hide {
+  transform: translateX(500%);
+  transition: transform 1s, opacity 1s;
+  opacity: 0;
+}

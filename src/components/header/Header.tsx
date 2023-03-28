@@ -1,7 +1,7 @@
-import NavItem from '../nav-item/nav-item';
+import NavItem from '../nav-item/NavItem';
 import styles from './header.module.scss';
 
-function Header() {
+const Header = () => {
   const routes: { [key: string]: string } = {
     '/': 'Home',
     '/about': 'About',
@@ -24,6 +24,6 @@ function Header() {
       </div>
     </header>
   );
-}
+};
 
 export default Header;

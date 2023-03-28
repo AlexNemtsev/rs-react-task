@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
-import HomePage from './routes/home-page/home';
-import AboutPage from './routes/about';
-import ErrorPage from './routes/error-page/error';
-import Layout from './components/layout';
-import FormPage from './routes/form-page/form';
+import HomePage from './routes/home-page/Home';
+import AboutPage from './routes/About';
+import ErrorPage from './routes/error-page/Error';
+import Layout from './components/Layout';
+import FormPage from './routes/form-page/Form';
 
-function App() {
+const App = () => {
   return (
     <>
       <Routes>
@@ -18,6 +18,6 @@ function App() {
       </Routes>
     </>
   );
-}
+};
 
 export default App;

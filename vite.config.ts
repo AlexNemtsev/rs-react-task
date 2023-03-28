@@ -15,6 +15,5 @@ export default defineConfig({
       all: true,
       clean: true,
     },
-    watch: false,
   },
 });
