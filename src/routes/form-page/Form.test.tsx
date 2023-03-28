@@ -3,15 +3,17 @@ import Form from './Form';
 import { it, describe } from 'vitest';
 
 describe('When Form component rendered', () => {
-  it('should display form element', () => {
-    const screen = render(<Form />);
-    const submitBtn = screen.getByText(/submit/i);
-    expect(submitBtn).toBeInTheDocument();
-  });
+  it('should display only form element', () => {
+    const { getByText, queryByText } = render(<Form />);
 
-  it('should not display confirmation message', () => {
-    const screen = render(<Form />);
-    const msg = screen.queryByText(/card created/i);
+    const submitBtn = getByText(/submit/i);
+    const msg = getByText(/card created/i);
+    const card = queryByText(/file name/i);
+    const formError = queryByText(/must/i);
+
+    expect(submitBtn).toBeInTheDocument();
     expect(msg).not.toBeVisible();
+    expect(card).toBeNull();
+    expect(formError).toBeNull();
   });
 });
