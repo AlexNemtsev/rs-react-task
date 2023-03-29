@@ -1,49 +1,33 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import styles from './search-bar.module.scss';
 
-interface SearchBarState {
-  inputValue: string;
-}
+const SearchBar = () => {
+  const storageKey = 'inputValue';
 
-class SearchBar extends React.Component<object, SearchBarState> {
-  constructor(props: object) {
-    super(props);
-    const value: string = localStorage.getItem(this.storageKey) || '';
-    this.state = { inputValue: value };
-    this.inputHandler = this.inputHandler.bind(this);
-  }
+  const [inputValue, setInputValue] = useState<string>(localStorage.getItem(storageKey) || '');
 
-  private storageKey = 'inputValue';
+  useEffect(() => {
+    localStorage.setItem(storageKey, inputValue);
+  });
 
-  componentDidMount(): void {
-    const value: string = localStorage.getItem(this.storageKey) || '';
-    this.setState({ inputValue: value });
-  }
-
-  componentWillUnmount(): void {
-    localStorage.setItem(this.storageKey, this.state.inputValue);
-  }
-
-  render(): React.ReactNode {
-    return (
-      <section className={styles.section}>
-        <input
-          type="text"
-          name="search"
-          id="search"
-          className={styles.input}
-          placeholder="Search..."
-          onInput={this.inputHandler}
-          value={this.state.inputValue}
-        />
-      </section>
-    );
-  }
-
-  inputHandler: React.FormEventHandler<HTMLInputElement> = (event) => {
+  const inputHandler: React.FormEventHandler<HTMLInputElement> = (event) => {
     const target = event.target as HTMLInputElement;
-    this.setState({ inputValue: target.value });
+    setInputValue(target.value);
   };
-}
+
+  return (
+    <section className={styles.section}>
+      <input
+        type="text"
+        name="search"
+        id="search"
+        className={styles.input}
+        placeholder="Search..."
+        onInput={inputHandler}
+        value={inputValue}
+      />
+    </section>
+  );
+};
 
 export default SearchBar;
