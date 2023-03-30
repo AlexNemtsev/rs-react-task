@@ -4,6 +4,7 @@ interface WithRouterProps {
   location: ReturnType<typeof useLocation>;
 }
 
+// TODO: throw away this HOC
 const WithRouter = <Props extends WithRouterProps>(Component: React.ComponentType<Props>) => {
   const ComponentWithRouterProp = (props: Omit<Props, keyof WithRouterProps>) => {
     const location = useLocation();
