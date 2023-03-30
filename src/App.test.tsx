@@ -1,13 +1,9 @@
-import { MemoryRouter } from 'react-router-dom';
-import App from '../App';
-import { render } from '@testing-library/react';
+import App from './App';
 import userEvent from '@testing-library/user-event';
-import LocalStorageMock from './local-storage-mock';
+import LocalStorageMock from './__tests__/local-storage-mock';
 import { vi } from 'vitest';
-import LocationMock from './location-mock';
-
-const renderWithRouter = (component: JSX.Element) =>
-  render(<MemoryRouter>{component}</MemoryRouter>);
+import LocationMock from './__tests__/location-mock';
+import renderWithRouter from './__tests__/render-with-router';
 
 beforeEach(() => {
   vi.stubGlobal('location', new LocationMock());
