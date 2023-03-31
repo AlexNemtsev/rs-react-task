@@ -11,3 +11,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+const testKey = import.meta.env.VITE_API_KEY;
+console.log(testKey);
