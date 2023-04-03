@@ -52,7 +52,7 @@ const FormPage = () => {
       { ...newData, position: positionOptions[newData.position], rss: newData.rss ? 'Yes' : 'No' },
     ]);
 
-    reset({});
+    reset();
     setMsgHide(false);
 
     setTimeout(() => {
