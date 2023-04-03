@@ -1,10 +1,9 @@
 import styles from './Error.module.scss';
 
 interface ErrorProps {
-  shouldDisplay: boolean;
-  text: string;
+  children: React.ReactNode;
 }
 
-export default function Error({ shouldDisplay, text }: ErrorProps) {
-  return <p className={styles.text}>{shouldDisplay ? text : ''}</p>;
+export default function Error(props: ErrorProps) {
+  return <p className={styles.text}>{props.children}</p>;
 }
