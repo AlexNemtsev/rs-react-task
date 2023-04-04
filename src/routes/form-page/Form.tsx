@@ -47,8 +47,6 @@ const FormPage = () => {
   const [msgHide, setMsgHide] = useState(true);
 
   const onSubmit: SubmitHandler<FormData> = (newData) => {
-    console.log(newData);
-
     setData([
       ...data,
       { ...newData, position: positionOptions[newData.position], rss: newData.rss ? 'Yes' : 'No' },
@@ -78,8 +76,8 @@ const FormPage = () => {
                 },
               })}
             />
+            {errors.firstName && <Error>{errors.firstName.message}</Error>}
           </label>
-          {errors.firstName && <Error>{errors.firstName.message}</Error>}
           <label>
             Last name:{' '}
             <input
@@ -91,13 +89,13 @@ const FormPage = () => {
                 },
               })}
             />
+            {errors.lastName && <Error>{errors.lastName.message}</Error>}
           </label>
-          {errors.lastName && <Error>{errors.lastName.message}</Error>}
           <label>
             Birth date:{' '}
             <input type="date" {...register('date', { required: true, validate: validateDate })} />
+            {errors.date && <Error>You must be elder than 18</Error>}
           </label>
-          {errors.date && <Error>You must be elder than 18</Error>}
           <fieldset className={[styles.radioButtons, styles.formElementPadding].join(' ')}>
             Sex:{' '}
             <label>
@@ -134,8 +132,8 @@ const FormPage = () => {
               accept="image/jpeg"
               {...register('photo', { validate: validateFile })}
             />
+            {errors.photo && <Error>Image must have jpeg format</Error>}
           </label>
-          {errors.photo && <Error>Image must have jpeg format</Error>}
           <input type="submit" value="Submit" />
         </form>
       </section>
