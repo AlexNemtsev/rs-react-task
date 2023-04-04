@@ -42,11 +42,13 @@ const FormPage = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FormData>();
+  } = useForm<FormData>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
   const [msgHide, setMsgHide] = useState(true);
 
   const onSubmit: SubmitHandler<FormData> = (newData) => {
+    console.log(newData);
+
     setData([
       ...data,
       { ...newData, position: positionOptions[newData.position], rss: newData.rss ? 'Yes' : 'No' },
