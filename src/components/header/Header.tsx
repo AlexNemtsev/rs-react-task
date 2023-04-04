@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import NavItem from '../nav-item/NavItem';
 import styles from './header.module.scss';
 
@@ -7,6 +8,8 @@ const Header = () => {
     '/about': 'About',
     '/form': 'Form',
   };
+
+  const location = useLocation();
 
   const keys = Object.keys(routes);
 

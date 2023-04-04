@@ -1,49 +1,37 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import styles from './search-bar.module.scss';
 
-interface SearchBarState {
-  inputValue: string;
-}
+const SearchBar = () => {
+  const storageKey = 'inputValue';
+  const searchFieldRef = useRef<HTMLInputElement>(null);
 
-class SearchBar extends React.Component<object, SearchBarState> {
-  constructor(props: object) {
-    super(props);
-    const value: string = localStorage.getItem(this.storageKey) || '';
-    this.state = { inputValue: value };
-    this.inputHandler = this.inputHandler.bind(this);
-  }
+  useEffect(() => {
+    const storedValue = localStorage.getItem(storageKey) || '';
+    const ref = searchFieldRef.current;
+    if (ref) {
+      ref.value = storedValue;
+    }
+  }, [searchFieldRef]);
 
-  private storageKey = 'inputValue';
+  useEffect(() => {
+    const ref = searchFieldRef.current;
+    return () => {
+      localStorage.setItem(storageKey, ref?.value || '');
+    };
+  }, [searchFieldRef]);
 
-  componentDidMount(): void {
-    const value: string = localStorage.getItem(this.storageKey) || '';
-    this.setState({ inputValue: value });
-  }
-
-  componentWillUnmount(): void {
-    localStorage.setItem(this.storageKey, this.state.inputValue);
-  }
-
-  render(): React.ReactNode {
-    return (
-      <section className={styles.section}>
-        <input
-          type="text"
-          name="search"
-          id="search"
-          className={styles.input}
-          placeholder="Search..."
-          onInput={this.inputHandler}
-          value={this.state.inputValue}
-        />
-      </section>
-    );
-  }
-
-  inputHandler: React.FormEventHandler<HTMLInputElement> = (event) => {
-    const target = event.target as HTMLInputElement;
-    this.setState({ inputValue: target.value });
-  };
-}
+  return (
+    <section className={styles.section}>
+      <input
+        type="text"
+        name="search"
+        id="search"
+        className={styles.input}
+        placeholder="Search..."
+        ref={searchFieldRef}
+      />
+    </section>
+  );
+};
 
 export default SearchBar;

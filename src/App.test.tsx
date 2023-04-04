@@ -1,16 +1,10 @@
-import { MemoryRouter } from 'react-router-dom';
-import App from '../App';
-import { render } from '@testing-library/react';
+import App from './App';
 import userEvent from '@testing-library/user-event';
-import LocalStorageMock from './local-storage-mock';
-import { vi } from 'vitest';
-import LocationMock from './location-mock';
-
-const renderWithRouter = (component: JSX.Element) =>
-  render(<MemoryRouter>{component}</MemoryRouter>);
+import LocalStorageMock from './__tests__/local-storage-mock';
+import { test, vi } from 'vitest';
+import renderWithRouter from './__tests__/render-with-router';
 
 beforeEach(() => {
-  vi.stubGlobal('location', new LocationMock());
   vi.stubGlobal('localStorage', new LocalStorageMock());
 });
 
@@ -20,12 +14,30 @@ test('Home page should be displayed', () => {
   expect(searchBar).toBeInTheDocument();
 });
 
-test('After clicking "About" link page "About" should be displayed', async () => {
+test('All navigation links should work correctly', async () => {
   const screen = renderWithRouter(<App />);
+
   const aboutLink = screen.getByText(/about/i);
+  const formLink = screen.getByText(/form/i);
+  const homeLink = screen.getAllByText(/home/i)[1];
+
   userEvent.click(aboutLink);
   const txt = await screen.findByText(/about us/i);
   expect(txt).toBeInTheDocument();
+
+  userEvent.click(formLink);
+  const btn = await screen.findByText(/submit/i);
+  expect(btn).toBeInTheDocument();
+
+  userEvent.click(homeLink);
+  const searchBar = await screen.findByPlaceholderText(/search\.\.\./i);
+  expect(searchBar).toBeInTheDocument();
+});
+
+test('A wrong path should lead to the 404 page', async () => {
+  const screen = renderWithRouter(<App />, ['/some-page']);
+  const errorPage = await screen.findByText(/404/);
+  expect(errorPage).toBeInTheDocument();
 });
 
 test('Search bar should save its value in Local Storage', async () => {
