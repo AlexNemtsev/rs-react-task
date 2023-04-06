@@ -1,19 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import styles from './search-bar.module.scss';
 
 const SearchBar = () => {
   const storageKey = 'inputValue';
-
-  const [inputValue, setInputValue] = useState<string>(localStorage.getItem(storageKey) || '');
+  const searchFieldRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    localStorage.setItem(storageKey, inputValue);
-  });
+    const storedValue = localStorage.getItem(storageKey) || '';
+    const ref = searchFieldRef.current;
+    if (ref) {
+      ref.value = storedValue;
+    }
+  }, [searchFieldRef]);
 
-  const inputHandler: React.FormEventHandler<HTMLInputElement> = (event) => {
-    const target = event.target as HTMLInputElement;
-    setInputValue(target.value);
-  };
+  useEffect(() => {
+    const ref = searchFieldRef.current;
+    return () => {
+      localStorage.setItem(storageKey, ref?.value || '');
+    };
+  }, [searchFieldRef]);
 
   return (
     <section className={styles.section}>
@@ -23,8 +28,7 @@ const SearchBar = () => {
         id="search"
         className={styles.input}
         placeholder="Search..."
-        onInput={inputHandler}
-        value={inputValue}
+        ref={searchFieldRef}
       />
     </section>
   );
