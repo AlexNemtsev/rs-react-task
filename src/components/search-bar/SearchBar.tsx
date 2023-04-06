@@ -13,12 +13,13 @@ const SearchBar = () => {
     }
   }, [searchFieldRef]);
 
-  useEffect(() => {
-    const ref = searchFieldRef.current;
-    return () => {
+  const onEnter: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
+    if (event.code === 'Enter') {
+      console.log('Value saved');
+      const ref = searchFieldRef.current;
       localStorage.setItem(storageKey, ref?.value || '');
-    };
-  }, [searchFieldRef]);
+    }
+  };
 
   return (
     <section className={styles.section}>
@@ -28,6 +29,7 @@ const SearchBar = () => {
         id="search"
         className={styles.input}
         placeholder="Search..."
+        onKeyDown={onEnter}
         ref={searchFieldRef}
       />
     </section>
