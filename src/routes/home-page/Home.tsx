@@ -1,16 +1,18 @@
-// import products from '../../assets/products';
-// import ProductCard from '../../components/product-card/ProductCard';
+import photos from '../../assets/photos';
+import PhotoCard from '../../components/product-card/PhotoCard';
 import SearchBar from '../../components/search-bar/SearchBar';
 import styles from './home-page.module.scss';
 
 const HomePage = () => {
-  // const cards = products.map((item) => <ProductCard key={item.id.toString()} item={item} />);
+  const cards = photos.map((item) => (
+    <PhotoCard key={item.id.toString()} img={item.urls.thumb} altDesc={item.alt_description} />
+  ));
 
   return (
     <>
       <SearchBar />
       <section className={styles.section}>
-        {/* <div className={styles.cards}>{cards}</div> */}
+        <div className={styles.cards}>{cards}</div>
       </section>
     </>
   );

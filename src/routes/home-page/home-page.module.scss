@@ -2,6 +2,7 @@
 
 .section {
   @include section-style;
+  padding-bottom: 0;
 }
 
 .input {
@@ -21,7 +22,7 @@
 }
 
 .cards {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  gap: 50px;
+  columns: 10rem;
+  width: 680px;
+  gap: 40px;
 }
