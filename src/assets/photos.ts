@@ -1,4 +1,4 @@
-import Photo from '../interfaces/photo';
+import { Photo } from '../interfaces/response';
 
 const photosMock: Photo[] = [
   {

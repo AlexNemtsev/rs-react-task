@@ -5,7 +5,7 @@ import AboutPage from './routes/About';
 import ErrorPage from './routes/error-page/Error';
 import Layout from './components/Layout';
 import FormPage from './routes/form-page/Form';
-import Photo from './interfaces/photo';
+import { Photo } from './interfaces/response';
 import UnsplashLoader from './libs/loader';
 
 const App = () => {
@@ -14,7 +14,8 @@ const App = () => {
   const [search, setSearch] = useState('');
   const [prevSearch, setPrevSearch] = useState('');
 
-  // TODO: Добавить работу LS для поиска
+  console.log(prevSearch, search);
+
   const updateSearchState = (searchStr: string) => {
     setPrevSearch(search);
     setSearch(searchStr);
@@ -38,7 +39,10 @@ const App = () => {
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage photos={photos} />} />
+          <Route
+            index
+            element={<HomePage photos={photos} search={search} updSearch={updateSearchState} />}
+          />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/form" element={<FormPage />} />
         </Route>
