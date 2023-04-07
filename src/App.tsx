@@ -11,18 +11,28 @@ import UnsplashLoader from './libs/loader';
 const App = () => {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isLoaded, setIsLoaded] = useState(true);
+  const [search, setSearch] = useState('');
+  const [prevSearch, setPrevSearch] = useState('');
+
+  // TODO: Добавить работу LS для поиска
+  const updateSearchState = (searchStr: string) => {
+    setPrevSearch(search);
+    setSearch(searchStr);
+  };
 
   console.log(isLoaded);
 
   useEffect(() => {
     setIsLoaded(false);
-    UnsplashLoader.getPhotos()
-      .then((resp) => resp.json())
-      .then((data) => {
-        setIsLoaded(true);
-        setPhotos(data as Photo[]);
-      });
-  }, []);
+    if (search === '' && (photos.length === 0 || search !== prevSearch)) {
+      UnsplashLoader.getPhotos()
+        .then((resp) => resp.json())
+        .then((data) => {
+          setIsLoaded(true);
+          setPhotos(data as Photo[]);
+        });
+    }
+  }, [photos.length, prevSearch, search]);
 
   return (
     <>
