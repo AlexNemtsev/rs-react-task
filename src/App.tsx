@@ -5,7 +5,7 @@ import AboutPage from './routes/About';
 import ErrorPage from './routes/error-page/Error';
 import Layout from './components/Layout';
 import FormPage from './routes/form-page/Form';
-import { Photo } from './interfaces/response';
+import { Photo, SearchResult } from './interfaces/response';
 import UnsplashLoader from './libs/loader';
 
 const App = () => {
@@ -14,23 +14,23 @@ const App = () => {
   const [search, setSearch] = useState('');
   const [prevSearch, setPrevSearch] = useState('');
 
-  console.log(prevSearch, search);
-
   const updateSearchState = (searchStr: string) => {
     setPrevSearch(search);
     setSearch(searchStr);
   };
 
-  console.log(isLoaded);
-
   useEffect(() => {
     setIsLoaded(false);
-    if (search === '' && (photos.length === 0 || search !== prevSearch)) {
-      UnsplashLoader.getPhotos()
+    if (photos.length === 0 || search !== prevSearch) {
+      UnsplashLoader.getPhotos(search)
         .then((resp) => resp.json())
-        .then((data) => {
+        .then((data: Photo[] | SearchResult) => {
           setIsLoaded(true);
-          setPhotos(data as Photo[]);
+          if ('results' in data) {
+            setPhotos(data.results);
+          } else {
+            setPhotos(data);
+          }
         });
     }
   }, [photos.length, prevSearch, search]);
