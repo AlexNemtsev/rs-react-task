@@ -1,6 +1,6 @@
 import Photo from '../interfaces/photo';
 
-const photos: Photo[] = [
+const photosMock: Photo[] = [
   {
     id: 'Vw24rIZzQq0',
     created_at: '2023-03-24T17:27:15Z',
@@ -887,4 +887,4 @@ const photos: Photo[] = [
   },
 ];
 
-export default photos;
+export default photosMock;
