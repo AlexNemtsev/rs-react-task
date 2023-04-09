@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import PhotoCard from '../../components/product-card/PhotoCard';
 import { SearchBar, SearchBarProps } from '../../components/search-bar/SearchBar';
 import { Photo } from '../../interfaces/response';
@@ -6,10 +6,10 @@ import styles from './home-page.module.scss';
 
 interface HomePageProps extends SearchBarProps {
   photos: Photo[];
+  isDataLoaded: boolean;
 }
 
 const HomePage = (props: HomePageProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const photoModalRef = useRef<HTMLDialogElement>(null);
 
   const cards = props.photos.map((item) => (
@@ -28,7 +28,7 @@ const HomePage = (props: HomePageProps) => {
         This is modal
       </dialog>
       <section className={styles.section}>
-        <div className={styles.cards}>{cards}</div>
+        {props.isDataLoaded ? <div className={styles.cards}>{cards}</div> : <h2>Loading...</h2>}
       </section>
     </>
   );

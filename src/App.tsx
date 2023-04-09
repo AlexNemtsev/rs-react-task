@@ -10,7 +10,7 @@ import UnsplashLoader from './libs/loader';
 
 const App = () => {
   const [photos, setPhotos] = useState<Photo[]>([]);
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [search, setSearch] = useState('');
   const [prevSearch, setPrevSearch] = useState('');
 
@@ -41,7 +41,14 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route
             index
-            element={<HomePage photos={photos} search={search} updSearch={updateSearchState} />}
+            element={
+              <HomePage
+                photos={photos}
+                search={search}
+                updSearch={updateSearchState}
+                isDataLoaded={isLoaded}
+              />
+            }
           />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/form" element={<FormPage />} />
