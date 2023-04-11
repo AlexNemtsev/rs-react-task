@@ -12,7 +12,6 @@
 
 .xBtn {
   cursor: pointer;
-  font-family: Arial, Helvetica, sans-serif;
   align-self: flex-end;
   border: none;
   outline: none;
@@ -25,7 +24,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
+  font-family: Arial, Helvetica, sans-serif;
   background: white;
 }
 

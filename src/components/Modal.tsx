@@ -23,7 +23,7 @@ const Modal = ({ photo, isOpen, handleClose }: ModalProps) => {
           <button onClick={handleClose} className={styles.xBtn}>
             Close
           </button>
-          <img width="540" src={photo.urls.regular} alt={photo.alt_description} />
+          <img height="540" src={photo.urls.regular} alt={photo.alt_description} />
           <div className={styles.sign}>
             <span>{'❤️' + photo.likes}</span>
             <span>{'Taken by ' + photo.user.username}</span>
