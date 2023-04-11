@@ -1,4 +1,4 @@
-import { SearchResult } from '../interfaces/response';
+import { SearchResult } from '../../src/interfaces/response';
 
 const response: SearchResult = {
   total: 10000,
