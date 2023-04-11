@@ -19,10 +19,10 @@ const Modal = ({ photo, isOpen, handleClose }: ModalProps) => {
   return (
     <ReactPortal>
       <div className={styles.modal} onClick={onBackdropClick}>
-        <button onClick={handleClose} className="close-btn">
-          Close
-        </button>
         <div className={styles.modalContent}>
+          <button onClick={handleClose} className={styles.xBtn}>
+            Close
+          </button>
           <img width="540" src={photo.urls.regular} alt={photo.alt_description} />
           <div className={styles.sign}>
             <span>{'❤️' + photo.likes}</span>
