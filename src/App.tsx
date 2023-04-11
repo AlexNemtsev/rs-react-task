@@ -9,14 +9,17 @@ import { Photo, SearchResult } from './interfaces/response';
 import UnsplashLoader from './libs/loader';
 
 const App = () => {
+  const storageKey = 'inputValue';
+  const storedValue = localStorage.getItem(storageKey) || '';
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [search, setSearch] = useState('');
-  const [prevSearch, setPrevSearch] = useState('');
+  const [search, setSearch] = useState(storedValue);
+  const [prevSearch, setPrevSearch] = useState(storedValue);
 
   const updateSearchState = (searchStr: string) => {
     setPrevSearch(search);
     setSearch(searchStr);
+    localStorage.setItem(storageKey, searchStr);
   };
 
   useEffect(() => {
