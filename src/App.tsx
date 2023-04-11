@@ -20,7 +20,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    setIsLoaded(false);
     if (photos.length === 0 || search !== prevSearch) {
       UnsplashLoader.getPhotos(search)
         .then((resp) => resp.json())
