@@ -1,23 +1,34 @@
 import React from 'react';
 import styles from './Modal.module.scss';
 import ReactPortal from './ReactPortal';
+import { Photo } from '../interfaces/response';
 
 interface ModalProps {
-  children: React.ReactNode;
   isOpen: boolean;
   handleClose: () => void;
+  photo: Photo;
 }
 
-const Modal = ({ children, isOpen, handleClose }: ModalProps) => {
+const Modal = ({ photo, isOpen, handleClose }: ModalProps) => {
   if (!isOpen) return null;
+
+  const onBackdropClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
+    if (event.target === event.currentTarget) handleClose();
+  };
 
   return (
     <ReactPortal>
-      <div className={styles.modal}>
+      <div className={styles.modal} onClick={onBackdropClick}>
         <button onClick={handleClose} className="close-btn">
           Close
         </button>
-        <div className={styles.modalContent}>{children}</div>
+        <div className={styles.modalContent}>
+          <img width="540" src={photo.urls.regular} alt={photo.alt_description} />
+          <div className={styles.sign}>
+            <span>{'❤️' + photo.likes}</span>
+            <span>{'Taken by ' + photo.user.username}</span>
+          </div>
+        </div>
       </div>
     </ReactPortal>
   );

@@ -12,6 +12,7 @@ interface HomePageProps extends SearchBarProps {
 
 const HomePage = (props: HomePageProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [photoToShow, setPhotoToShow] = useState<Photo>();
 
   const cards = props.photos.map((item) => (
     <PhotoCard
@@ -19,6 +20,7 @@ const HomePage = (props: HomePageProps) => {
       img={item.urls.thumb}
       altDesc={item.alt_description}
       onClick={() => {
+        setPhotoToShow(item);
         setIsOpen(true);
       }}
     />
@@ -32,9 +34,8 @@ const HomePage = (props: HomePageProps) => {
           setIsOpen(false);
         }}
         isOpen={isOpen}
-      >
-        {'this is Modal'}
-      </Modal>
+        photo={photoToShow as Photo}
+      />
       <section className={styles.section}>
         {props.isDataLoaded ? <div className={styles.cards}>{cards}</div> : <h2>Loading...</h2>}
       </section>
