@@ -5,13 +5,16 @@ import { Photo, SearchResult } from '../../interfaces/response';
 import styles from './home-page.module.scss';
 import Modal from '../../components/Modal';
 import UnsplashLoader from '../../libs/loader';
+import { useAppDispatch, useAppSelector } from '../../hook';
+import { setSearchValue } from '../../store/slice';
 
 const HomePage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [photoToShow, setPhotoToShow] = useState<Photo>();
 
-  const storageKey = 'inputValue';
-  const storedValue = localStorage.getItem(storageKey) || '';
+  const dispatch = useAppDispatch();
+
+  const storedValue = useAppSelector((state) => state.searchValue.search);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [search, setSearch] = useState(storedValue);
@@ -20,7 +23,7 @@ const HomePage = () => {
   const updateSearchState = (searchStr: string) => {
     setPrevSearch(search);
     setSearch(searchStr);
-    localStorage.setItem(storageKey, searchStr);
+    dispatch(setSearchValue(searchStr));
     setIsDataLoaded(false);
   };
 
