@@ -14,22 +14,18 @@ const HomePage = () => {
 
   const dispatch = useAppDispatch();
 
-  const storedValue = useAppSelector((state) => state.searchValue.search);
+  const searchValues = useAppSelector((state) => state.searchValue);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [search, setSearch] = useState(storedValue);
-  const [prevSearch, setPrevSearch] = useState(storedValue);
 
   const updateSearchState = (searchStr: string) => {
-    setPrevSearch(search);
-    setSearch(searchStr);
     dispatch(setSearchValue(searchStr));
-    setIsDataLoaded(false);
   };
 
   useEffect(() => {
-    if (photos.length === 0 || search !== prevSearch) {
-      UnsplashLoader.getPhotos(search)
+    if (photos.length === 0 || searchValues.search !== searchValues.prevSearch) {
+      setIsDataLoaded(false);
+      UnsplashLoader.getPhotos(searchValues.search)
         .then((resp) => resp.json())
         .then((data: Photo[] | SearchResult) => {
           setIsDataLoaded(true);
@@ -40,7 +36,7 @@ const HomePage = () => {
           }
         });
     }
-  }, [photos.length, prevSearch, search]);
+  }, [photos.length, searchValues]);
 
   const cards = photos.map((item) => (
     <PhotoCard
@@ -56,7 +52,7 @@ const HomePage = () => {
 
   return (
     <>
-      <SearchBar updSearch={updateSearchState} search={search} />
+      <SearchBar updSearch={updateSearchState} search={searchValues.search} />
       <Modal
         handleClose={() => {
           setIsOpen(false);

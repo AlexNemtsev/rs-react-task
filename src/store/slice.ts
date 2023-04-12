@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type SearchState = {
   search: string;
+  prevSearch: string;
 };
 
 const initialState: SearchState = {
   search: '',
+  prevSearch: '',
 };
 
 const searchSlice = createSlice({
@@ -13,6 +15,7 @@ const searchSlice = createSlice({
   initialState,
   reducers: {
     setSearchValue(state, action: PayloadAction<string>) {
+      state.prevSearch = state.search;
       state.search = action.payload;
     },
   },
