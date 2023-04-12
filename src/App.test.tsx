@@ -47,6 +47,7 @@ test('Search bar should save its value in Local Storage', async () => {
   const testString = '123abc';
 
   await userEvent.type(searchBar, testString);
+  await userEvent.keyboard('{Enter}');
 
   const aboutLink = screen.getByText(/about/i);
   await userEvent.click(aboutLink);

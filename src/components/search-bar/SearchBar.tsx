@@ -1,24 +1,27 @@
 import { useEffect, useRef } from 'react';
 import styles from './search-bar.module.scss';
 
-const SearchBar = () => {
-  const storageKey = 'inputValue';
+interface SearchBarProps {
+  updSearch: (searchStr: string) => void;
+  search: string;
+}
+
+const SearchBar = ({ updSearch, search }: SearchBarProps) => {
   const searchFieldRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const storedValue = localStorage.getItem(storageKey) || '';
     const ref = searchFieldRef.current;
     if (ref) {
-      ref.value = storedValue;
+      ref.value = search;
     }
-  }, [searchFieldRef]);
+  }, [search, searchFieldRef]);
 
-  useEffect(() => {
-    const ref = searchFieldRef.current;
-    return () => {
-      localStorage.setItem(storageKey, ref?.value || '');
-    };
-  }, [searchFieldRef]);
+  const onEnter: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
+    if (event.code === 'Enter') {
+      const ref = searchFieldRef.current;
+      updSearch(ref?.value || '');
+    }
+  };
 
   return (
     <section className={styles.section}>
@@ -28,10 +31,12 @@ const SearchBar = () => {
         id="search"
         className={styles.input}
         placeholder="Search..."
+        onKeyDown={onEnter}
         ref={searchFieldRef}
       />
     </section>
   );
 };
 
-export default SearchBar;
+export { SearchBar };
+export type { SearchBarProps };
