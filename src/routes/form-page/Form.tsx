@@ -5,6 +5,8 @@ import { FormData } from '../../interfaces/form-interfaces';
 import CvCard from '../../components/CvCard';
 import Error from '../../components/error-message/Error';
 import ConfirmMsg from '../../components/ConfirmMsg';
+import { useAppDispatch, useAppSelector } from '../../hook';
+import { addCV } from '../../store/cv-slice';
 
 const positionOptions: { [key: string]: string } = {
   fe: 'Front-end',
@@ -35,7 +37,8 @@ const validateFile = (file?: FileList): boolean => {
 };
 
 const FormPage = () => {
-  const [data, setData] = useState<FormData[]>([]);
+  const data = useAppSelector((state) => state.сv.data);
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -47,10 +50,7 @@ const FormPage = () => {
   const [msgHide, setMsgHide] = useState(true);
 
   const onSubmit: SubmitHandler<FormData> = (newData) => {
-    setData([
-      ...data,
-      { ...newData, position: positionOptions[newData.position], rss: newData.rss ? 'Yes' : 'No' },
-    ]);
+    dispatch(addCV({ ...newData, position: positionOptions[newData.position], rss: newData.rss ? 'Yes' : 'No' }));
 
     reset();
     setMsgHide(false);

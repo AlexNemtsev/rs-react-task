@@ -9,7 +9,7 @@ const initialState: PhotosState = {
   photos: [],
 };
 
-const searchSlice = createSlice({
+const photoSlice = createSlice({
   name: 'photos',
   initialState,
   reducers: {
@@ -19,6 +19,6 @@ const searchSlice = createSlice({
   },
 });
 
-export const { addNewPhotos } = searchSlice.actions;
+export const { addNewPhotos } = photoSlice.actions;
 
-export default searchSlice.reducer;
+export default photoSlice.reducer;
