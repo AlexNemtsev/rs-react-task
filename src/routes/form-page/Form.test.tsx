@@ -1,6 +1,6 @@
 import Form from './Form';
 import { it, describe } from 'vitest';
-import renderWithRouterAndRedux from '../../__tests__/render-with-router';
+import renderWithRouterAndRedux from '../../../tests/render-with-router-redux';
 
 describe('When Form component rendered', () => {
   it('should display only form element', () => {

@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from '../store/index';
+import store from '../src/store/index';
 
 const renderWithRouterAndRedux = (component: JSX.Element, initialEntries?: string[]) =>
   render(

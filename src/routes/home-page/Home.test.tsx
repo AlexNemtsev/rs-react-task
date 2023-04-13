@@ -1,5 +1,5 @@
 import { it, test, describe } from 'vitest';
-import renderWithRouterAndRedux from '../../__tests__/render-with-router';
+import renderWithRouterAndRedux from '../../../tests/render-with-router-redux';
 import Home from './Home';
 import photosMock from '../../../tests/tests-data/photos';
 

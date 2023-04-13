@@ -1,12 +1,7 @@
 import App from './App';
 import userEvent from '@testing-library/user-event';
-import LocalStorageMock from './__tests__/local-storage-mock';
-import { test, vi } from 'vitest';
-import renderWithRouterAndRedux from './__tests__/render-with-router';
-
-beforeEach(() => {
-  vi.stubGlobal('localStorage', new LocalStorageMock());
-});
+import { test } from 'vitest';
+import renderWithRouterAndRedux from '../tests/render-with-router-redux';
 
 test('Home page should be displayed', () => {
   const screen = renderWithRouterAndRedux(<App />);
