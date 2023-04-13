@@ -6,7 +6,6 @@ import styles from './home-page.module.scss';
 import Modal from '../../components/Modal';
 import UnsplashLoader from '../../libs/loader';
 import { useAppDispatch, useAppSelector } from '../../hook';
-import { setSearchValue } from '../../store/slice';
 
 const HomePage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,10 +16,6 @@ const HomePage = () => {
   const searchValues = useAppSelector((state) => state.searchValue);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-
-  const updateSearchState = (searchStr: string) => {
-    dispatch(setSearchValue(searchStr));
-  };
 
   useEffect(() => {
     if (photos.length === 0 || searchValues.search !== searchValues.prevSearch) {
@@ -52,7 +47,7 @@ const HomePage = () => {
 
   return (
     <>
-      <SearchBar updSearch={updateSearchState} search={searchValues.search} />
+      <SearchBar />
       <Modal
         handleClose={() => {
           setIsOpen(false);
