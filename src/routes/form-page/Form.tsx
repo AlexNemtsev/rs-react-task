@@ -50,7 +50,13 @@ const FormPage = () => {
   const [msgHide, setMsgHide] = useState(true);
 
   const onSubmit: SubmitHandler<FormData> = (newData) => {
-    dispatch(addCV({ ...newData, position: positionOptions[newData.position], rss: newData.rss ? 'Yes' : 'No' }));
+    dispatch(
+      addCV({
+        ...newData,
+        position: positionOptions[newData.position],
+        rss: newData.rss ? 'Yes' : 'No',
+      })
+    );
 
     reset();
     setMsgHide(false);

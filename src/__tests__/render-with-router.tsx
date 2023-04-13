@@ -1,7 +1,13 @@
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from '../store/index';
 
-const renderWithRouter = (component: JSX.Element, initialEntries?: string[]) =>
-  render(<MemoryRouter initialEntries={initialEntries}>{component}</MemoryRouter>);
+const renderWithRouterAndRedux = (component: JSX.Element, initialEntries?: string[]) =>
+  render(
+    <Provider store={store}>
+      <MemoryRouter initialEntries={initialEntries}>{component}</MemoryRouter>
+    </Provider>
+  );
 
-export default renderWithRouter;
+export default renderWithRouterAndRedux;

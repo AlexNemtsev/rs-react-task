@@ -2,20 +2,20 @@ import App from './App';
 import userEvent from '@testing-library/user-event';
 import LocalStorageMock from './__tests__/local-storage-mock';
 import { test, vi } from 'vitest';
-import renderWithRouter from './__tests__/render-with-router';
+import renderWithRouterAndRedux from './__tests__/render-with-router';
 
 beforeEach(() => {
   vi.stubGlobal('localStorage', new LocalStorageMock());
 });
 
 test('Home page should be displayed', () => {
-  const screen = renderWithRouter(<App />);
+  const screen = renderWithRouterAndRedux(<App />);
   const searchBar = screen.getByPlaceholderText(/search\.\.\./i);
   expect(searchBar).toBeInTheDocument();
 });
 
 test('All navigation links should work correctly', async () => {
-  const screen = renderWithRouter(<App />);
+  const screen = renderWithRouterAndRedux(<App />);
 
   const aboutLink = screen.getByText(/about/i);
   const formLink = screen.getByText(/form/i);
@@ -35,13 +35,13 @@ test('All navigation links should work correctly', async () => {
 });
 
 test('A wrong path should lead to the 404 page', async () => {
-  const screen = renderWithRouter(<App />, ['/some-page']);
+  const screen = renderWithRouterAndRedux(<App />, ['/some-page']);
   const errorPage = await screen.findByText(/404/);
   expect(errorPage).toBeInTheDocument();
 });
 
 test('Search bar should save its value in Local Storage', async () => {
-  const screen = renderWithRouter(<App />);
+  const screen = renderWithRouterAndRedux(<App />);
   let searchBar = screen.getByPlaceholderText(/search\.\.\./i) as HTMLInputElement;
 
   const testString = '123abc';
