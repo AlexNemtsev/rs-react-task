@@ -6,15 +6,16 @@ import styles from './home-page.module.scss';
 import Modal from '../../components/Modal';
 import UnsplashLoader from '../../libs/loader';
 import { useAppDispatch, useAppSelector } from '../../hook';
+import { addNewPhotos } from '../../store/photos-slice';
 
 const HomePage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [photoToShow, setPhotoToShow] = useState<Photo>();
 
   const dispatch = useAppDispatch();
-
   const searchValues = useAppSelector((state) => state.searchValue);
-  const [photos, setPhotos] = useState<Photo[]>([]);
+  const photos = useAppSelector((state) => state.photos.photos);
+
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
@@ -25,13 +26,13 @@ const HomePage = () => {
         .then((data: Photo[] | SearchResult) => {
           setIsDataLoaded(true);
           if ('results' in data) {
-            setPhotos(data.results);
+            dispatch(addNewPhotos(data.results));
           } else {
-            setPhotos(data);
+            dispatch(addNewPhotos(data));
           }
         });
     }
-  }, [photos.length, searchValues]);
+  }, [dispatch, photos.length, searchValues]);
 
   const cards = photos.map((item) => (
     <PhotoCard

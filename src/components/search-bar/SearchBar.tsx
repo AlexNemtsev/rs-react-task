@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import styles from './search-bar.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hook';
-import { setSearchValue } from '../../store/slice';
+import { setSearchValue } from '../../store/search-slice';
 
 const SearchBar = () => {
   const searchFieldRef = useRef<HTMLInputElement>(null);
