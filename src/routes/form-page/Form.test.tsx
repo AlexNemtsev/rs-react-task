@@ -1,10 +1,10 @@
-import { render } from '@testing-library/react';
 import Form from './Form';
 import { it, describe } from 'vitest';
+import renderWithRouterAndRedux from '../../../tests/render-with-router-redux';
 
 describe('When Form component rendered', () => {
   it('should display only form element', () => {
-    const { getByText, queryByText } = render(<Form />);
+    const { getByText, queryByText } = renderWithRouterAndRedux(<Form />);
 
     const submitBtn = getByText(/submit/i);
     const msg = getByText(/card created/i);

@@ -5,39 +5,34 @@ import { Photo, SearchResult } from '../../interfaces/response';
 import styles from './home-page.module.scss';
 import Modal from '../../components/Modal';
 import UnsplashLoader from '../../libs/loader';
+import { useAppDispatch, useAppSelector } from '../../hook';
+import { addNewPhotos } from '../../store/photos-slice';
 
 const HomePage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [photoToShow, setPhotoToShow] = useState<Photo>();
 
-  const storageKey = 'inputValue';
-  const storedValue = localStorage.getItem(storageKey) || '';
-  const [photos, setPhotos] = useState<Photo[]>([]);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [search, setSearch] = useState(storedValue);
-  const [prevSearch, setPrevSearch] = useState(storedValue);
+  const dispatch = useAppDispatch();
+  const searchValues = useAppSelector((state) => state.searchValue);
+  const photos = useAppSelector((state) => state.photos.photos);
 
-  const updateSearchState = (searchStr: string) => {
-    setPrevSearch(search);
-    setSearch(searchStr);
-    localStorage.setItem(storageKey, searchStr);
-    setIsDataLoaded(false);
-  };
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
-    if (photos.length === 0 || search !== prevSearch) {
-      UnsplashLoader.getPhotos(search)
+    if (photos.length === 0 || searchValues.search !== searchValues.prevSearch) {
+      setIsDataLoaded(false);
+      UnsplashLoader.getPhotos(searchValues.search)
         .then((resp) => resp.json())
         .then((data: Photo[] | SearchResult) => {
           setIsDataLoaded(true);
           if ('results' in data) {
-            setPhotos(data.results);
+            dispatch(addNewPhotos(data.results));
           } else {
-            setPhotos(data);
+            dispatch(addNewPhotos(data));
           }
         });
     }
-  }, [photos.length, prevSearch, search]);
+  }, [dispatch, photos.length, searchValues]);
 
   const cards = photos.map((item) => (
     <PhotoCard
@@ -53,7 +48,7 @@ const HomePage = () => {
 
   return (
     <>
-      <SearchBar updSearch={updateSearchState} search={search} />
+      <SearchBar />
       <Modal
         handleClose={() => {
           setIsOpen(false);
